@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class RoadMain {
-    /*Roadmain is used as the traffic simulator */
+
     private int numRoads = 0;
     ArrayList<Road> roads = new ArrayList<Road>();
     private Random random = new Random();
@@ -16,12 +16,9 @@ public class RoadMain {
 
 
     public static void main(String[] args) throws InterruptedException {
-        /*Basic simulator with 5 roads and one traffic light at the end of road 0.
-        New vehicles are added at random with random attributes. The traffic light changes status at random.
-        More raods and traffic lights can be added by using addTrafficLight and
-        addConnectingRoad methods*/
 
-        // Add roads and traffic lights here///////////////////////////////////////////
+
+
         RoadMain roadMain = new RoadMain();
         roadMain.addnewRoad(25, 10, "North", 0, 0);
         roadMain.addConectingRoad(0, 25, "East");
@@ -30,11 +27,11 @@ public class RoadMain {
         roadMain.addConectingRoad(1, 25, "South");
         roadMain.addConectingRoad(1, 25, "North");
 
-        ///////Traffic Lights
+
         roadMain.roads.get(0).addTrafficLight("End");
         roadMain.roads.get(1).addTrafficLight("End");
 
-        ////////////////////////////////////////////////////////////////////////////////////////
+
 
         for (; ; ) {
             TimeUnit.SECONDS.sleep(1);
@@ -93,7 +90,7 @@ public class RoadMain {
     }
 
     void addnewRoad(int length, int width, String direction, int xinit, int yinit) {
-        /*Adds a road which is no connected to any existing road */
+
         if (length > 12 && length < 30) {
             roads.add(new Road(length, width, direction, xinit, yinit));
             roads.get(numRoads).makeRoad();
@@ -102,7 +99,7 @@ public class RoadMain {
     }
 
     void addConectingRoad(int roadRef, int length, String direction) {
-        /*Adds a new road onto the end of an existing road. To add an intersection, add multiple roads to the end of the same road  */
+
         if (length > 12 && length < 30) {
             String dir = roads.get(roadRef).getDirection();
             int north_end = roads.get(roadRef).getYnorth();
@@ -193,7 +190,7 @@ public class RoadMain {
     }
 
     public void addTrafficLight(int roadRef, String whichEnd) {
-        /*Adds a traffic light to specified road */
+
         roads.get(roadRef).addTrafficLight(whichEnd);
     }
 
@@ -203,7 +200,7 @@ public class RoadMain {
 
 
     void moveVehicles() {
-        /*Moves vehicles on all roads  */
+
         for (int i = roads.size() - 1; i >= 0; i--) {
 
             roads.get(i).moveVehicles();
@@ -213,8 +210,7 @@ public class RoadMain {
 
 
     private void checkTurns() {
-        /*Checks if a vehicle has moved off its current road. If it has and there are connected roads, the vehicle will turn (be added to next road
-         * if there are multiple connected roads (intersection) the vehicles turn randomly to one of the new roads   */
+
         Random r = new Random();
         for (Road road : roads) {
             if (road.vehiclesOffRoad.size() > 0) {
@@ -323,7 +319,7 @@ public class RoadMain {
     }
 
     void printPos() {
-        /*Prints the road number, vehicle types and vehicle positions on all roads  */
+
 
         System.out.println("\nMoving vehicles....\n");
         for (int v = 0; v < roads.size(); v++) {
@@ -364,8 +360,8 @@ public class RoadMain {
 }
 
 
-/*Old code i thought i might need. Was messing around with an add intersection method. Decided that the same thing could be achieved
- * by simply adding 2 or 3 connecting roads to a road*/
+/*Old
+ *  road*/
 /*
 
  public void checkTurns() {
