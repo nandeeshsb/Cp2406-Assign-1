@@ -8,6 +8,8 @@ class CarTest {
 
     @Test
     void getType() {
+        kdsj
+                dsklcvm
         Car car = new Car("West", 1, 0, 0);
         car.intiDir();
         assertEquals("Car", car.getType());
