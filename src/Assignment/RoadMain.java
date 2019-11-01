@@ -3,22 +3,30 @@ package Assignment;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import Assignment.Gui.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class RoadMain {
-
+    /*Roadmain is used as the traffic simulator */
     private int numRoads = 0;
     ArrayList<Road> roads = new ArrayList<Road>();
     private Random random = new Random();
     ArrayList<TrafficLight> trafficLights = new ArrayList<TrafficLight>();
+  //  Gui gui = new Gui();
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
 
+    }
+     /*     Basic simulator with 5 roads and one traffic light at the end of road 0.
+        New vehicles are added at random with random attributes. The traffic light changes status at random.
+        More raods and traffic lights can be added by using addTrafficLight and
+        addConnectingRoad methods*//*
 
+        // Add roads and traffic lights here///////////////////////////////////////////
         RoadMain roadMain = new RoadMain();
         roadMain.addnewRoad(25, 10, "North", 0, 0);
         roadMain.addConectingRoad(0, 25, "East");
@@ -27,13 +35,15 @@ public class RoadMain {
         roadMain.addConectingRoad(1, 25, "South");
         roadMain.addConectingRoad(1, 25, "North");
 
-
+        ///////Traffic Lights
         roadMain.roads.get(0).addTrafficLight("End");
         roadMain.roads.get(1).addTrafficLight("End");
 
+        roadMain.runSim();
 
+        ////////////////////////////////////////////////////////////////////////////////////////
 
-        for (; ; ) {
+       for (; ; ) {
             TimeUnit.SECONDS.sleep(1);
             Random r = new Random();
             int j = r.nextInt(7);
@@ -83,24 +93,30 @@ public class RoadMain {
         }
 
     }
-
+*/
 
     public void change_roads(int road_ref) {
 
     }
 
-    void addnewRoad(int length, int width, String direction, int xinit, int yinit) {
+    public void setGui() {
+        //gui.setVisible(true);
+    }
 
-        if (length > 12 && length < 30) {
+
+
+    public void addnewRoad(int length, int width, String direction, int xinit, int yinit) {
+        /*Adds a road which is no connected to any existing road */
+        //if (length > 12 && length < 30) {
             roads.add(new Road(length, width, direction, xinit, yinit));
             roads.get(numRoads).makeRoad();
             numRoads++;
-        }
+            //  }
     }
 
-    void addConectingRoad(int roadRef, int length, String direction) {
-
-        if (length > 12 && length < 30) {
+    public void addConectingRoad(int roadRef, int length, String direction) {
+        /*Adds a new road onto the end of an existing road. To add an intersection, add multiple roads to the end of the same road  */
+      //  if (length > 12 && length < 30) {
             String dir = roads.get(roadRef).getDirection();
             int north_end = roads.get(roadRef).getYnorth();
             int south_end = roads.get(roadRef).getYsouth();
@@ -111,17 +127,21 @@ public class RoadMain {
                 if (dir.equals("North")) {
                     if (!direction.equals("South")) {
 
-                        if (direction.equals("East")) {
-                            roads.add(new Road(length, width_new,
-                                    direction, west_end, north_end));
+                        switch (direction) {
+                            case "East":
+                                roads.add(new Road(length, width_new,
+                                        direction, east_end, north_end));
 
-                        } else if (direction.equals("West")) {
-                            roads.add(new Road(length, width_new,
-                                    direction, east_end, north_end));
-                        } else if (direction.equals("North")) {
-                            roads.add(new Road(length, width_new,
-                                    direction, east_end, north_end));
+                                break;
+                            case "West":
+                                roads.add(new Road(length, width_new,
+                                        direction, west_end, north_end));
+                                break;
+                            case "North":
+                                roads.add(new Road(length, width_new,
+                                        direction, west_end, north_end + width_new));
 
+                                break;
                         }
 
                     }
@@ -129,16 +149,20 @@ public class RoadMain {
                 if (dir.equals("South")) {
                     if (!direction.equals("North")) {
 
-                        if (direction.equals("East")) {
-                            roads.add(new Road(length, width_new,
-                                    direction, west_end, south_end - width_new));
-                        } else if (direction.equals("West")) {
-                            roads.add(new Road(length, width_new,
-                                    direction, west_end, south_end - width_new));
-                        } else if (direction.equals("South")) {
-                            roads.add(new Road(length, width_new,
-                                    direction, east_end, south_end));
+                        switch (direction) {
+                            case "East":
+                                roads.add(new Road(length, width_new,
+                                        direction, east_end, south_end - width_new));
+                                break;
+                            case "West":
+                                roads.add(new Road(length, width_new,
+                                        direction, west_end, south_end - width_new));
+                                break;
+                            case "South":
+                                roads.add(new Road(length, width_new,
+                                        direction, west_end, south_end - width_new));
 
+                                break;
                         }
 
                     }
@@ -146,16 +170,20 @@ public class RoadMain {
                 if (dir.equals("East")) {
                     if (!direction.equals("West")) {
 
-                        if (direction.equals("North")) {
-                            roads.add(new Road(length, width_new,
-                                    direction, east_end, south_end));
-                        } else if (direction.equals("South")) {
-                            roads.add(new Road(length, width_new,
-                                    direction, east_end, north_end));
-                        } else if (direction.equals("East")) {
-                            roads.add(new Road(length, width_new,
-                                    direction, east_end, south_end));
+                        switch (direction) {
+                            case "North":
+                                roads.add(new Road(length, width_new,
+                                        direction, east_end, north_end));
+                                break;
+                            case "South":
+                                roads.add(new Road(length, width_new,
+                                        direction, east_end, south_end));
+                                break;
+                            case "East":
+                                roads.add(new Road(length, width_new,
+                                        direction, east_end + width_new, south_end));
 
+                                break;
                         }
 
                     }
@@ -166,22 +194,22 @@ public class RoadMain {
                         switch (direction) {
                             case "North":
                                 roads.add(new Road(length, width_new,
-                                        direction, west_end - width_new, south_end));
+                                        direction, west_end - width_new, north_end));
                                 break;
                             case "South":
                                 roads.add(new Road(length, width_new,
-                                        direction, west_end - width_new, north_end));
+                                        direction, west_end - width_new, south_end));
                                 break;
                             case "West":
                                 roads.add(new Road(length, width_new,
-                                        direction, east_end, south_end));
+                                        direction, west_end - width_new, south_end));
 
                                 break;
                         }
 
                     }
                 }
-            }
+           // }
             roads.get(numRoads).makeRoad();
             roads.get(roadRef).setConnectedRoads(numRoads);
 
@@ -190,7 +218,7 @@ public class RoadMain {
     }
 
     public void addTrafficLight(int roadRef, String whichEnd) {
-
+        /*Adds a traffic light to specified road */
         roads.get(roadRef).addTrafficLight(whichEnd);
     }
 
@@ -201,18 +229,25 @@ public class RoadMain {
 
     void moveVehicles() {
 
+        /*Moves vehicles on all roads  */
         for (int i = roads.size() - 1; i >= 0; i--) {
-
+            //for (int i = 0; i < roads.size(); i++) {
             roads.get(i).moveVehicles();
-            checkTurns();
+            checkTurns(i);
+            ///////mapdraw vehicles here/////
+
+
         }
+
     }
 
 
-    private void checkTurns() {
-
+    private void checkTurns(int i) {
+        /*Checks if a vehicle has moved off its current road. If it has and there are connected roads, the vehicle will turn (be added to next road
+         * if there are multiple connected roads (intersection) the vehicles turn randomly to one of the new roads   */
         Random r = new Random();
-        for (Road road : roads) {
+       // for (Road road : roads) {
+        Road road = roads.get(i);
             if (road.vehiclesOffRoad.size() > 0) {
                 for (int n = 0; n < road.vehiclesOffRoad.size(); n++) {
                     int ref;
@@ -242,7 +277,7 @@ public class RoadMain {
                         } else road.vehicles.get(0).setPos(road.getRoadEnd());
 
                     } else if (road.connectedRoads.size() == 1) {
-                        if (isEmpty(road.connectedRoads.get(n),
+                        if (isEmpty(road.connectedRoads.get(0),
                                 road.vehiclesOffRoad.get(n).getLength())) {
 
                             ref = road.connectedRoads.get(n);
@@ -262,7 +297,7 @@ public class RoadMain {
             road.reset_offRoad();
 
         }
-    }
+    //}
 
 
     public boolean isEmpty(int i, int size) {
@@ -274,32 +309,51 @@ public class RoadMain {
         } else if (i == roads.size() - 1) {
             status = true;
         } else if (roads.get(i).vehicles.size() > 0) {
-            if (roads.get(i).getDirection().equals("North")) {
-                if (roads.get(i).getVehicleOnRoad(roads.get(i).vehicles.size() - 1).getYrear()
-                        > roads.get(i).getYsouth() + size) {
+                if (roads.get(i).vehicles.get(roads.get(i).vehicles.size() - 1).getDistanceTraveled()
+                        > size+15)
                     status = true;
-                }
-            } else if (roads.get(i).getDirection().equals("South")) {
-                if (roads.get(i).getVehicleOnRoad(roads.get(i).vehicles.size() - 1).getYrear()
-                        > roads.get(i).getYnorth() - size) {
-                    status = true;
-                }
-            } else if (roads.get(i).getDirection().equals("East")) {
-                if (roads.get(i).getVehicleOnRoad(roads.get(i).vehicles.size() - 1).getYrear()
-                        > roads.get(i).getXwest() + size) {
-                    status = true;
-                }
-            } else if (roads.get(i).getDirection().equals("North")) {
-                if (roads.get(i).getVehicleOnRoad(roads.get(i).vehicles.size() - 1).getYrear()
-                        > roads.get(i).getXeast() - size) {
-                    status = true;
-                }
-            }
-        } else status = false;
+        }
 
 
         return status;
     }
+/*    public boolean isEmpty(int i, int size) {
+        *//*Returns true if there is enough room at the beginning of a new road to add a new vehicle to it. Used when
+         * turning vehicles  *//*
+        boolean status = false;
+        if (roads.get(i).vehicles.size() == 0) {
+            status = true;
+        } else if (i == roads.size() - 1) {
+            status = true;
+        } else if (roads.get(i).vehicles.size() > 0) {
+            if (roads.get(i).getDirection().equals("North")) {
+                if (roads.get(i).getVehicleOnRoad(roads.get(i).vehicles.size() - 1).getYrear()
+                        < roads.get(i).getYsouth() + 15) {
+                    status = true;
+                }
+            } else if (roads.get(i).getDirection().equals("South")) {
+                if (roads.get(i).getVehicleOnRoad(roads.get(i).vehicles.size() - 1).getYrear()
+                        > roads.get(i).getYnorth() - 15) {
+                    status = true;
+                }
+            } else if (roads.get(i).getDirection().equals("East")) {
+                if (roads.get(i).getVehicleOnRoad(roads.get(i).vehicles.size() - 1).getXrear()
+                        < roads.get(i).getXwest() + 15) {
+                    status = true;
+                }
+            } else if (roads.get(i).getDirection().equals("West")) {
+                if (roads.get(i).getVehicleOnRoad(roads.get(i).vehicles.size() - 1).getXrear()
+                        > roads.get(i).getXeast() - 15) {
+                    status = true;
+
+                }
+            }
+
+        } else status = false;
+
+
+        return status;
+    }*/
 
 
     void addVehicle(String type, int speed, int roadRef) {
@@ -307,6 +361,8 @@ public class RoadMain {
         if (type.equals("Car")) {
             roads.get(roadRef).addCar(speed);
             roads.get(roadRef).vehicles.get(roads.get(roadRef).vehicles.size() - 1).setRoadRef(roadRef);
+
+
         } else if (type.equals("Bus")) {
             roads.get(roadRef).addBus(speed);
             roads.get(roadRef).vehicles.get(roads.get(roadRef).vehicles.size() - 1).setRoadRef(roadRef);
@@ -315,11 +371,12 @@ public class RoadMain {
             roads.get(roadRef).addMotorbike(speed);
             roads.get(roadRef).vehicles.get(roads.get(roadRef).vehicles.size() - 1).setRoadRef(roadRef);
 
+
         }
     }
 
     void printPos() {
-
+        /*Prints the road number, vehicle types and vehicle positions on all roads  */
 
         System.out.println("\nMoving vehicles....\n");
         for (int v = 0; v < roads.size(); v++) {
@@ -357,11 +414,71 @@ public class RoadMain {
 
         }
     }
+
+    public void runSim() {
+        Random r = new Random();
+       // for (; ; ) {
+            //TimeUnit.SECONDS.sleep(1);
+        if (roads.get(0).vehicles.size() < 3 ) {
+
+            int j = r.nextInt(50);
+            int speed = r.nextInt(6) + 3;
+            if (j == 0) {
+                if (isEmpty(0, 20)) {
+                    addVehicle("Car", speed, 0);
+
+                }
+            } else if (j == 1) {
+                if (isEmpty(0, 10)) {
+                    addVehicle("Motorbike", speed, 0);
+                }
+            } else if (j == 2) {
+                if (isEmpty(0, 60)) {
+
+                    addVehicle("Bus", speed, 0);
+                }
+            }
+        }
+
+            printPos();
+            moveVehicles();
+
+
+
+
+            for (Road road : roads) {
+                if (road.lightAtEnd()) {
+                    int i = r.nextInt(150);
+                    if (i >147) {
+                        road.setEndLight(true);
+                    } else if (i <3) {
+                        road.setEndLight(false);
+                    }
+                } else if (road.lightAtStart()) {
+                    int i = r.nextInt(5);
+                    if (i == 0 || i == 2 || i == 3) {
+                        road.setStartLight(true);
+                    } else if (i == 1 || i == 4) {
+                        road.setStartLight(false);
+                    }
+
+
+                }
+
+
+            }
+       // }
+    }
+
+   public ArrayList<Road> getRoads(){
+        return roads;
+    }
+
 }
 
 
-/*Old
- *  road*/
+/*Old code i thought i might need. Was messing around with an add intersection method. Decided that the same thing could be achieved
+ * by simply adding 2 or 3 connecting roads to a road*/
 /*
 
  public void checkTurns() {
