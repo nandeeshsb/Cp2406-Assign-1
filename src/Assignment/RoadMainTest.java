@@ -12,7 +12,7 @@ class RoadMainTest {
     void testnewRoads() {
         RoadMain roadMain = new RoadMain();
 
-        roadMain.addnewRoad(20, 10, "North", 0, 0);//0
+        roadMain.addnewRoad(20, 9, "North", 0, 0);//0
         roadMain.addConectingRoad(0, 200, "North");//1
         roadMain.addConectingRoad(0, 200, "East");//2
         roadMain.addConectingRoad(0, 200, "West");//3
