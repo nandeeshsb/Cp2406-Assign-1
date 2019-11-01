@@ -37,7 +37,7 @@ public class RoadShape {
         return length;
     }
 
-    //@Override
+
 
     public void addVehicle(){
 
@@ -84,8 +84,7 @@ public class RoadShape {
 
 
     public void draw(Graphics g) {
-      //  g.fillRect(xinit, yinit, length, width);
-        //super.draw(g);
+
         switch (direction) {
             case "North":
                 g.setColor(Color.WHITE);
